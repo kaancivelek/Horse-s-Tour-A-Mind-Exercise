@@ -1,70 +1,79 @@
-# Getting Started with Create React App
+# Horse-s-Tour-A-Mind-Exercise
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Knight's Tour Game: Algorithm Analysis
 
-## Available Scripts
+## Project Overview
 
-In the project directory, you can run:
+This React application implements a modified version of the classic "Knight's Tour" chess puzzle. The game features a 9x9 chess board where the player controls a knight's movement according to standard chess rules. The goal is to navigate the knight across the board while earning points for each valid move.
 
-### `npm start`
+## Core Game Mechanics
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Board Representation
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- The game uses a 9x9 grid represented as a two-dimensional array.
+- Each cell on the board can have one of four states:
+  - 0: Empty cell (unvisited)
+  - 1: Visited cell (knight has previously occupied this cell)
+  - 2: Valid move (a cell where the knight can legally move next)
+  - 3: Current knight position
 
-### `npm test`
+### Knight Movement
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The knight follows the standard chess piece movement pattern:
+- Moves in an L-shape: 2 squares in one direction and 1 square perpendicular to that direction
+- From any position, the knight has up to 8 possible moves (if all are within board boundaries)
 
-### `npm run build`
+## Algorithm Analysis
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Game Initialization
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. The game starts with the knight positioned at the center of the board (coordinates [4,4]).
+2. The starting position is marked with value 3.
+3. The system then calculates and highlights all valid moves from this position.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Move Validation
 
-### `npm run eject`
+The `highlightNextMove` function:
+1. Creates a copy of the current board state
+2. Determines all eight possible L-shaped moves from the current position
+3. For each possible move:
+   - Checks if the move is within board boundaries using the `isValidMove` helper
+   - Verifies the destination cell is empty (value 0)
+   - If both conditions are met, marks the cell as a valid move (value 2)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Move Execution
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+When a player selects a valid move, the `chooseNextMove` function:
+1. Verifies the selected cell is a valid move (value 2)
+2. Increments the player's score
+3. Marks the previous knight position as visited (value 1)
+4. Clears all highlighted valid moves
+5. Updates the knight's position to the selected cell (value 3)
+6. Calculates and highlights new valid moves from the updated position
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Visual Representation
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The game provides visual feedback through:
+- Color coding: Different colors for empty, visited, valid move, and current position cells
+- Animation: Knight movement animation and blinking effect for valid moves
+- Horse image: Displayed on the current knight position
 
-## Learn More
+## Algorithm Complexity
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Time Complexity**: The move validation process has O(1) complexity as it always checks exactly 8 possible moves.
+- **Space Complexity**: O(n²) where n is the board size (9 in this case), required to store the state of each cell.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Game Challenges
 
-### Code Splitting
+Unlike the traditional Knight's Tour puzzle that aims to visit each square exactly once, this implementation:
+1. Focuses on continuous play with score accumulation
+2. Allows revisiting empty cells
+3. Could potentially lead to situations where no valid moves are available
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Potential Enhancements
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The algorithm could be extended to include:
+1. Detection of dead-end scenarios where no more moves are possible
+2. Implementation of the Warnsdorff's rule to suggest optimal moves
+3. Addition of a complete tour detection to recognize when all cells have been visited
+4. Difficulty levels by varying board size or adding obstacles
