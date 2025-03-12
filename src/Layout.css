@@ -1,0 +1,81 @@
+/**
+ * Game board container
+ */
+ .Layout {
+  display: flex;
+  flex-direction: column;
+}
+
+/**
+ * Board row styling
+ */
+.row {
+  display: flex;
+}
+
+/**
+ * Individual cell styling with transition effects
+ */
+.cell {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #000;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+/**
+ * Cell state styling:
+ * 0 - Empty cell
+ * 1 - Visited cell
+ * 2 - Valid move
+ * 3 - Knight's current position
+ */
+.cell-0 { background-color: #E2DFD0; } /* Empty cell */
+.cell-1 { background-color: #0B192C; } /* Visited cell */
+.cell-2 { background-color: #1E3E62; } /* Valid move */
+.cell-3 { background-color: #FF6500; } /* Knight's position */
+
+/**
+ * Knight image display
+ */
+.cell.horse {
+  background-image: url("./horse.png"); 
+}
+
+/**
+ * Animation for knight movement
+ */
+.cell-3 {
+  animation: moveKnight 0.3s ease-in-out;
+}
+
+@keyframes moveKnight {
+  0% {
+    transform: translateY(-4px);
+  }
+  50% {
+    transform: translateY(2px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/**
+ * Blinking animation for valid moves
+ */
+.cell-2 {
+  animation: blink 0.8s infinite alternate;
+}
+
+@keyframes blink {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
